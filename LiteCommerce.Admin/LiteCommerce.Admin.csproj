@@ -121,7 +121,12 @@
     <Compile Include="App_Start\BusinessLayerConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Codes\Encode.cs" />
     <Compile Include="Codes\SelectListHelper.cs" />
+    <Compile Include="Codes\WebUserData.cs" />
+    <Compile Include="Codes\WebUserExtensions.cs" />
+    <Compile Include="Codes\WebUserPrincipal.cs" />
+    <Compile Include="Codes\WebUserRoles.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -154,6 +159,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\60d93c00a10496df2994d97d907f59c4.jpg" />
+    <Content Include="Images\IMG_20191019_103656.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
