@@ -1,0 +1,158 @@
+﻿@model LiteCommerce.Admin.Models.SupplierPaginationResult
+@{
+    ViewBag.Title = "Supplier";
+    int i = 0;
+}
+
+<div class="box box-primary">
+    <div class="box-body">
+        <form action="~/Supplier" method="get">
+            <div class="input-group input-group-sm">
+                <input name="searchValue" type="text" class="form-control" placeholder="Input search value..." value="@Model.SearchValue">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<form action="~/Supplier/Delete" method="post">
+    <div class="container-fluid row" style="margin-bottom:10px;">
+        <div class="col-sm-8">
+            There are <b>@Model.RowCount</b> Suppliers. Page <b>@string.Format("{0}/{1}", Model.Page, Model.PageCount)
+    </b>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="btn-group">
+                <a href="~/Supplier/Input" class="btn btn-sm btn-primary">Add Supplier</a>
+                <button type="submit" class="btn btn-sm btn-danger">Delete Suppliers</button>
+            </div>
+        </div>
+    </div>
+    <div class="box box-success">
+        <div class="box-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width:30px">
+                            <input type="checkbox" />
+                        </th>
+                        <th style="width:50px">#</th>
+                        <th style="width:auto">Name</th>
+                        <th style="width:200px">Address</th>
+                        <th style="width:200px">Contact Info</th>
+                        <th style="width:50px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var supplier in Model.Data)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox"  name="supplierIDs" value="@supplier.SupplierID"/>
+                            </td>
+                            <td>@(++i)</td>
+                            <td>
+                                <span style="color:#0094ff; font-weight:bold; display:block">
+                                    @supplier.CompanyName
+                                </span>
+                                <span style="color:#646464">
+                                    @supplier.ContactTitle
+                                </span>
+                                <span style="color:#646464;font-weight:bold">
+                                    @supplier.ContactName
+                                </span>
+                            </td>
+                            <td>
+                                <span style="display:block">@supplier.Address</span>
+                                <span>@supplier.City - @supplier.Country</span>
+                            </td>
+                            <td>
+                                <span style="display:block"><i class="fa fa-phone"></i> @supplier.Phone</span>
+                                <span style="display:block"><i class="fa fa-fax"></i> @supplier.Fax</span>
+                                <span style="display:block"><i class="fa fa-home"></i> @supplier.HomePage</span>
+                            </td>
+                            <td class="text-right">
+                                <a class="btn btn-sm btn-default" href="~/Supplier/Input/@supplier.SupplierID/">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix text-center">
+            <ul class="pagination pagination-sm no-margin pull-right">
+                @*<li><a href="~/Supplier?page=1&searchValue=@Model.SearchValue">«</a></li>
+        @for (int page = 1; page <= Model.PageCount; page++)
+        {
+            if (page == Model.Page)
+            {
+                <li class="active"><a href="#">@page</a></li>
+            }
+            else
+            {
+                <li><a href="~/Supplier?page=@page&searchValue=@Model.SearchValue">@page</a></li>
+            }
+        }
+        <li><a href="~/Supplier?page=@Model.PageCount&searchValue=@Model.SearchValue">»</a></li>*@
+
+                @{
+                    int currentPage = Model.Page; // số của trang đang chọn
+                                                  // Pagination head
+                    if (currentPage - 5 > 0)
+                    {
+                        int prePage = currentPage - 1;
+                        <li><a href="~/Supplier?searchValue=@Model.SearchValue&page=1">‹‹</a></li>
+                        <li><a href="~/Supplier?searchValue=@Model.SearchValue&page=@prePage">‹</a></li>
+                        <li><a href="#">...</a></li>
+                    }
+                    int startPage;
+                    if (currentPage - 4 > 0)
+                    {
+                        startPage = currentPage - 4;
+                    }
+                    else
+                    {
+                        startPage = 1;
+                    }
+                    for (int page = startPage; page <= currentPage; page++)
+                    {
+                        if (page == currentPage)
+                        {
+                            <li class="active"><a href="~/Supplier?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/Supplier?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                        }
+                    }
+                    // Pagination tail
+                    int endPage = currentPage + 4 < Model.PageCount ? currentPage + 4 : Model.PageCount;
+                    for (int page = currentPage + 1; page <= endPage; page++)
+                    {
+                        if (page == currentPage)
+                        {
+                            <li class="active"><a href="~/Supplier?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/Supplier?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                        }
+                    }
+                    if (currentPage + 4 < Model.PageCount)
+                    {
+                        int nextPage = currentPage + 1;
+                        <li><a href="#">...</a></li>
+                        <li><a href="~/Supplier?searchValue=@Model.SearchValue&page=@nextPage">›</a></li>
+                        <li><a href="~/Supplier?searchValue=@Model.SearchValue&page=@Model.PageCount">››</a></li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</form>

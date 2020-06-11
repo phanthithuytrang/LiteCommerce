@@ -1,0 +1,15 @@
+﻿.lc-margin-bottom {
+    margin-bottom: 10px;
+}
+.lc-company-name {
+    color: #0094ff;
+    font-weight: bold;
+    display: block
+}
+.lc-contact-name {
+    color: #646464;
+    font-weight: bold;
+}
+.lc-contact-title {
+    color: #646464;
+}

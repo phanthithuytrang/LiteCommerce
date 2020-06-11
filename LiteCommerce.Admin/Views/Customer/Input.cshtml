@@ -1,0 +1,92 @@
+﻿@model LiteCommerce.DomainModels.Customer
+@{
+
+}
+<div class="box box-primary">
+    <form role="form" action="~/Customer/Input" method="post">
+        <div class="box-header text-right">
+            <a href="~/Customer">Back to List</a>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <label>CustomerID:</label>
+                <input type="text" class="form-control" name="CustomerID" value="@Model.CustomerID" @(Model.CustomerID != "" ? "readOnly" : "") />
+            </div>
+            
+            <div class="form-group">
+                <label>Company Name:@Html.ValidationMessage("CompanyName", new { style = "color:red;font-weight:bold" })</label>
+                <input type="text" class="form-control" placeholder="Enter Company Name" value="@Model.CompanyName" name="CompanyName">
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Contact Name:@Html.ValidationMessage("ContactName", new { style = "color:red;font-weight:bold" })</label>
+                    <input type="text" class="form-control" placeholder="Contact Name" value="@Model.ContactName" name="ContactName">
+                </div>
+                <div class="col-sm-6">
+                    <label>Contact Title:@Html.ValidationMessage("ContactTitle", new { style = "color:red;font-weight:bold" })</label>
+                    <input type="text" class="form-control" placeholder="Ex: Sale Manager" value="@Model.ContactTitle" name="ContactTitle">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Address:@Html.ValidationMessage("Address", new { style = "color:red;font-weight:bold" })</label>
+                <input type="text" class="form-control" placeholder="Address" value="@Model.Address" name="Address">
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Country:@Html.ValidationMessage("Country", new { style = "color:red;font-weight:bold" })</label>
+                    <select class="form-control" name="Country">
+                        <option value="">-- Choose Country --</option>
+                        @foreach (var country in SelectListHelper.Countries())
+                        {
+                            if (Model.Country == country.Value)
+                            {
+                                <option value="@country.Value" selected>@country.Text</option>
+                            }
+                            else
+                            {
+                                <option value="@country.Value">@country.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label>City:@Html.ValidationMessage("City", new { style = "color:red;font-weight:bold" })</label>
+                    <input type="text" class="form-control" placeholder="Ex: New Orleans" value="@Model.City" name="City">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Phone:@Html.ValidationMessage("Phone", new { style = "color:red;font-weight:bold" })</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <input type="text" class="form-control" value="@Model.Phone" name="Phone">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Fax:@Html.ValidationMessage("Fax", new { style = "color:red;font-weight:bold" })</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-fax"></i>
+                        </div>
+                        <input type="text" class="form-control" value="@Model.Fax" name="Fax">
+                    </div>
+                </div>
+            </div>
+            <div>
+                @Html.ValidationMessage("")
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-sm btn-primary">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <a class="btn btn-sm btn-default" href="~/Customer">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+

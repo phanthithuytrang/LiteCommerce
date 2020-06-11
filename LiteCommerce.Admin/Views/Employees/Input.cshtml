@@ -1,0 +1,124 @@
+﻿@model LiteCommerce.DomainModels.Employee
+@{
+
+}
+<div class="box box-primary">
+    <form role="form"  action="~/Employees/Input" method="post"  enctype="multipart/form-data">
+        <div class="box-header text-right">
+            <a href="~/Employees">Back to List</a>
+        </div>
+        <div class="box-body">
+            <input type="hidden" name="EmployeeID" value="@Model.EmployeeID" />
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Last Name:@Html.ValidationMessage("LastName", new { style = "color:red;font-weight:bold" })</label>
+                    <input type="text" class="form-control" placeholder="Enter Last Name" value="@Model.LastName" name="LastName">
+                </div>
+                <div class="col-sm-6">
+                    <label>First Name:@Html.ValidationMessage("FirstName", new { style = "color:red;font-weight:bold" })</label>
+                    <input type="text" class="form-control" placeholder="Enter First Name" value="@Model.FirstName" name="FirstName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Title:@Html.ValidationMessage("Title", new { style = "color:red;font-weight:bold" })</label>
+                <select class="form-control" name="Title">
+                    <option value="">-- Choose Title --</option>
+                    @foreach (var title in SelectListHelper.Titles())
+                    {
+                        if (Model.Title == title.Value)
+                        {
+                            <option selected value="@title.Value">@title.Text</option>
+                        }
+                        else
+                        {
+                            <option value="@title.Value">@title.Text</option>
+                        }
+
+                    }
+                </select>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>BirthDate:@Html.ValidationMessage("BithDate", new { style = "color:red;font-weight:bold" })</label>
+                    <input type="datetime" class="form-control" placeholder="" value="@Model.BirthDate" name="BirthDate">
+                </div>
+                <div class="col-sm-6">
+                    <label>HireDate:@Html.ValidationMessage("HireDate", new { style = "color:red;font-weight:bold" })</label>
+                    <input type="datetime" class="form-control" placeholder="" value="@Model.HireDate" name="HireDate">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Email:@Html.ValidationMessage("Email", new { style = "color:red;font-weight:bold" })</label>
+                <input type="text" class="form-control" placeholder="Email" value="@Model.Email" name="Email">
+            </div>
+            <div class="form-group">
+                <label>Address:@Html.ValidationMessage("Address", new { style = "color:red;font-weight:bold" })</label>
+                <input type="text" class="form-control" placeholder="Address" value="@Model.Address" name="Address">
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Country:@Html.ValidationMessage("Country", new { style = "color:red;font-weight:bold" })</label>
+                    <select class="form-control" name="Country">
+                        <option value="">-- Choose Country --</option>
+                        @foreach (var country in SelectListHelper.Countries())
+                        {
+                            if (Model.Country == country.Value)
+                            {
+                                <option value="@country.Value" selected>@country.Text</option>
+                            }
+                            else
+                            {
+                                <option value="@country.Value">@country.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label>City:@Html.ValidationMessage("City", new { style = "color:red;font-weight:bold" })</label>
+                    <input type="text" class="form-control" placeholder="Ex: New Orleans" value="@Model.City" name="City">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>HomePhone:@Html.ValidationMessage("HomePhone", new { style = "color:red;font-weight:bold" })</label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <input type="text" class="form-control" value="@Model.HomePhone" name="HomePhone">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Notes:@Html.ValidationMessage("Notes", new { style = "color:red;font-weight:bold" })</label>
+                <input type="text" class="form-control" placeholder="Enter Note" value="@Model.Notes" name="Notes">
+            </div>
+            <div class="form-group">
+                <label>Password:@Html.ValidationMessage("Password", new { style = "color:red;font-weight:bold" })</label>
+                <input type="text" class="form-control" placeholder="Enter password" value="@Model.Password" name="Password">
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <div class="form-group text-center">
+                        <img style="object-fit:cover; width:300px;  height:200px;" id="showThumb" class="img-fluid" src="~/images/Uploads/@Model.PhotoPath">
+                    </div>
+                    <div>
+                        <label>
+                            @Html.ValidationMessage("PhotoPath", "", new { @class = "text-danger" })
+                            <input type="file" name="uploadFile" value="@Model.PhotoPath">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-sm btn-primary">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <a class="btn btn-sm btn-default" href="~/Employees">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+

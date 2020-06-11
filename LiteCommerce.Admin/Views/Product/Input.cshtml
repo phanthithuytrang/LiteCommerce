@@ -1,0 +1,148 @@
+﻿@model LiteCommerce.Admin.Models.ProductAttributeResult
+
+@{
+    int i = 0;
+}
+
+    <div class="box box-primary">
+        <form role="form" action="~/Product/Input" method="post" enctype="multipart/form-data">
+            <div class="box-header text-right">
+                <a href="~/Product">Back to List</a>
+            </div>
+            <div class="box-body">
+                <input type="hidden" name="ProductID" value="@Model.Product.ProductID" />
+                <div class="form-group">
+                    <label>Product Name:@Html.ValidationMessage("ProductName", new { style = "color:red;font-weight:bold" })</label>
+                    <input type="text" class="form-control" placeholder="Enter Product Name" name="ProductName" value="@Model.Product.ProductName">
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label>Suppliers:@Html.ValidationMessage("SupplierID", new { style = "color:red;font-weight:bold" })</label>
+                        <select class="form-control" name="SupplierID">
+                            <option value="">-- All Supplier --</option>
+                            @foreach (var suppliers in SelectListHelper.Suppliers())
+                            {
+                                if (Model.Product.SupplierID == Convert.ToInt32(suppliers.Value))
+                                {
+                                    <option value="@suppliers.Value" selected>@suppliers.Text</option>
+                                }
+                                else
+                                {
+                                    <option value="@suppliers.Value">@suppliers.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Categories:@Html.ValidationMessage("CategoryID", new { style = "color:red;font-weight:bold" })</label>
+                        <select class="form-control" name="CategoryID">
+                            <option value="">-- All Categories --</option>
+                            @foreach (var categories in SelectListHelper.Categories())
+                            {
+                                if (Model.Product.CategoryID == Convert.ToInt32(categories.Value))
+                                {
+                                    <option value="@categories.Value" selected>@categories.Text</option>
+                                }
+                                else
+                                {
+                                    <option value="@categories.Value">@categories.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label>Quantity Per Unit:@Html.ValidationMessage("QuantityPerUnit", new { style = "color:red;font-weight:bold" })</label>
+                        <input type="text" class="form-control" placeholder="Quantity Per Unit" value="@Model.Product.QuantityPerUnit" name="QuantityPerUnit">
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Unit Price:@Html.ValidationMessage("UnitPrice", new { style = "color:red;font-weight:bold" })</label>
+                        <input type="text" class="form-control" placeholder="Unit Price" name="UnitPrice" value="@Model.Product.UnitPrice">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Descriptions:@Html.ValidationMessage("Descriptions", new { style = "color:red;font-weight:bold" })</label>
+                    <textarea class="form-control" rows="3" placeholder="Description" name="Descriptions">@Model.Product.Descriptions</textarea>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <div class="form-group text-center">
+                            <img style="object-fit:cover; width:300px;  height:200px;" id="showThumb" class="img-fluid" src="~/images/Uploads/@Model.Product.PhotoPath">
+                        </div>
+                        <div>
+                            <label>
+                                @*@Html.ValidationMessage("PhotoPath", "", new { @class = "text-danger" })*@
+                                <input type="file" name="uploadFile" value="@Model.Product.PhotoPath">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    @Html.ValidationMessage("")
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-sm btn-primary">
+                    <i class="fa fa-save"></i> Save
+                </button>
+                <a class="btn btn-sm btn-default" href="~/Product">
+                    Cancel
+                </a>
+            </div>
+        </form>
+
+        @if (ViewBag.Method == "Edit")
+        {
+            <form action="~/Product/DeleteAttribute" method="post">
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col-sm-8" style="color:brown">
+                        <b>List attributes of product "@Model.Product.ProductName"</b>
+                    </div>
+                    <input type="hidden" name="productID" value="@Model.Product.ProductID" />
+                    <div class="col-md-4 text-right">
+                        <div class="btn-group">
+                            <a href="~/Product/Attribute?ProductID=@Model.Product.ProductID" class="btn btn-sm btn-primary">Add Attribute</a>
+                            <button type="submit" class="btn btn-sm btn-danger">Delete Attributes</button>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered" style="background-color:cornflowerblue;">
+                    <thead>
+                        <tr>
+                            <th style="width:30px">
+                                <input type="checkbox" id="selectall" />
+                            </th>
+                            <th width="50">#</th>
+                            <th>Attribute Name</th>
+                            <th>Attribute Value</th>
+                            <th>Display Order</th>
+                            <th width="50"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var attr in Model.ProductAttributes)
+                        {
+                            <tr>
+                                <td>
+                                    <input class="checkbox__item" type="checkbox" name="attributeIDs" value="@attr.AttributeID" />
+                                </td>
+                                <td>@(++i)</td>
+                                <td>@attr.AttributeName</td>
+                                <td>@attr.AttributeValues</td>
+                                <td>@attr.DisplayOrder</td>
+                                <td class="text-right">
+                                    <a class="btn btn-sm btn-default" href="~/Product/Attribute?ProductID=@attr.ProductID&AttributeID=@attr.AttributeID">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
+        }
+    </div>
+

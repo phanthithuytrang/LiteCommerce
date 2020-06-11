@@ -1,0 +1,40 @@
+﻿@model LiteCommerce.DomainModels.Shipper
+@{
+
+}
+<div class="box box-primary">
+    <form role="form"  action="~/Shipper/Input" method="post">
+        <div class="box-header text-right">
+            <a href="~/Shipper">Back to List</a>
+        </div>
+        <div class="box-body">
+            <input type="hidden" name="ShipperID" value="@Model.ShipperID" />
+            <div class="form-group">
+                <label>Company Name:@Html.ValidationMessage("CompanyName", new { style = "color:red;font-weight:bold" })</label>
+                <input type="text" class="form-control" placeholder="Enter Company Name" value="@Model.CompanyName" name="CompanyName">
+            </div>
+            <div class="form-group">
+                <label>Phone:@Html.ValidationMessage("Phone", new { style = "color:red;font-weight:bold" })</label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <input type="text" class="form-control" value="@Model.Phone" name="Phone">
+                </div>
+            </div>
+            <div>
+                @Html.ValidationMessage("")
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-sm btn-primary">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <a class="btn btn-sm btn-default" href="~/Shipper">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,9 @@
+C:\Users\DELL\source\repos\LiteCommerce\LiteCommerce.DataLayer\bin\Debug\LiteCommerce.DataLayer.dll
+C:\Users\DELL\source\repos\LiteCommerce\LiteCommerce.DataLayer\bin\Debug\LiteCommerce.DataLayer.pdb
+C:\Users\DELL\source\repos\LiteCommerce\LiteCommerce.DataLayer\obj\Debug\LiteCommerce.DataLayers.csprojAssemblyReference.cache
+C:\Users\DELL\source\repos\LiteCommerce\LiteCommerce.DataLayer\obj\Debug\LiteCommerce.DataLayers.csproj.CoreCompileInputs.cache
+C:\Users\DELL\source\repos\LiteCommerce\LiteCommerce.DataLayer\obj\Debug\LiteCommerce.DataLayer.dll
+C:\Users\DELL\source\repos\LiteCommerce\LiteCommerce.DataLayer\obj\Debug\LiteCommerce.DataLayer.pdb
+C:\Users\DELL\source\repos\LiteCommerce\LiteCommerce.DataLayer\bin\Debug\LiteCommerce.DomainModels.dll
+C:\Users\DELL\source\repos\LiteCommerce\LiteCommerce.DataLayer\bin\Debug\LiteCommerce.DomainModels.pdb
+C:\Users\DELL\source\repos\LiteCommerce\LiteCommerce.DataLayer\obj\Debug\LiteCommerce.DataLayers.csproj.CopyComplete

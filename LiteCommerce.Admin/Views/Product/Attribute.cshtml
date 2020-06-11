@@ -1,0 +1,73 @@
+﻿@model LiteCommerce.DomainModels.ProductAttribute
+@{
+
+}
+<div class="box box-primary">
+    <!-- form start -->
+    <form role="form" action="~/Product/Attribute" method="post">
+        <div class="box-header text-right">
+            <a href="~/Product">Back to List</a>
+        </div>
+        <div style="color: red; font-weight: bold">@Html.ValidationSummary()</div>
+        <div class="box-body">
+            <div class="row">
+                <input type="hidden" name="AttributeID" value="@Model.AttributeID" />
+                <input type="hidden" name="ProductID" value="@Model.ProductID" />
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <select class="form-control" name="AttributeName">
+                            @foreach (var attr in SelectListHelper.Attributes())
+                            {
+                                if (Model.AttributeName == attr.Value)
+                                {
+                                    <option value="@attr.Value" selected>@attr.Text</option>
+                                }
+                                else
+                                {
+                                    <option value="@attr.Value">@attr.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        <label>Value:</label>
+                        <input type="text" class="form-control" placeholder="Attribute value" value="@Model.AttributeValues" name="AttributeValues" />
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>Display Order:</label>
+                        <select class="form-control" name="DisplayOrder">
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                if (Model.DisplayOrder == i)
+                                {
+                                    <option value="@i" selected>@i</option>
+                                }
+                                else
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="box-footer">
+            <button type="submit" class="btn btn-sm btn-primary">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <a class="btn btn-sm btn-default" href="~/Product/Input/@Model.ProductID">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+
