@@ -1,4 +1,5 @@
-﻿using LiteCommerce.BusinessLayers;
+﻿using LiteCommerce.Admin.Codes;
+using LiteCommerce.BusinessLayers;
 using LiteCommerce.DomainModels;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Web.Mvc;
 
 namespace LiteCommerce.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = WebUserRoles.ADMINISTRATOR)]
     public class EmployeesController : Controller
     {
         // GET: Employees
@@ -88,7 +89,9 @@ namespace LiteCommerce.Admin.Controllers
                 if (string.IsNullOrEmpty(model.PhotoPath))
                     model.PhotoPath = "";
                 if (string.IsNullOrEmpty(model.Password))
-                    ModelState.AddModelError("Password", "Password expected");
+                {
+                    model.Password = Encode.EncodeMD5("123456");
+                }
 
                 if (uploadFile != null)
                 {

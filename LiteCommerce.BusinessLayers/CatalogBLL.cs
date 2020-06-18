@@ -74,15 +74,20 @@ namespace LiteCommerce.BusinessLayers
             return SupplierDB.List(1,-1,"");
         }
 
-        public static List<Customer> ListOfCustomer(int page, int pageSize, string searchValue, out int rowCount)
+        public static List<Customer> ListOfCustomer(int page, int pageSize, string searchValue, string country, out int rowCount)
         {
             if (page < 1)
                 page = 1;
             if (pageSize < 0)
                 pageSize = 20;
-            rowCount = CustomerDB.Count(searchValue);
-            return CustomerDB.List(page, pageSize, searchValue);
+            rowCount = CustomerDB.Count(searchValue, country);
+            return CustomerDB.List(page, pageSize, searchValue, country);
         }
+
+        //public static List<Customer> ListOfCustomer()
+        //{
+        //    return CustomerDB.List(1, -1, "");
+        //}
 
         public static List<Shipper> ListOfShippers(int page, int pageSize, string searchValue, out int rowCount)
         {

@@ -46,6 +46,7 @@
     <Compile Include="ICountryDAL.cs" />
     <Compile Include="ICustomerDAL.cs" />
     <Compile Include="IEmployeeDAL.cs" />
+    <Compile Include="IOrderDAL.cs" />
     <Compile Include="IProductAttributeDAL.cs" />
     <Compile Include="IShipperDAL.cs" />
     <Compile Include="ISupplierDAL.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="SqlServer\EmployeeDAL.cs" />
     <Compile Include="IProductDAL.cs" />
     <Compile Include="SqlServer\EmployeeUserAccountDAL.cs" />
+    <Compile Include="SqlServer\OrderDAL.cs" />
     <Compile Include="SqlServer\ProductAttributeDAL.cs" />
     <Compile Include="SqlServer\ProductDAL.cs" />
     <Compile Include="SqlServer\ShipperDAL.cs" />

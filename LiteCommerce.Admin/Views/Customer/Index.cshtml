@@ -7,13 +7,33 @@
 <div class="box box-primary">
     <div class="box-body">
         <form action="~/Customer" method="get">
-            <div class="input-group input-group-sm">
-                <input name="searchValue" type="text" class="form-control" placeholder="Input search value..." value="@Model.SearchValue">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary btn-flat">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
+            <div class="row">
+                <div class="col-sm-4">
+                    <select name="country" onchange="countryChange()" class="form-control">
+                        <option value="">-- All countries--</option>
+                        @foreach (var countries in SelectListHelper.Countries())
+                        {
+                            if (countries.Value == Model.Country)
+                            {
+                                <option value="@countries.Value" selected>@countries.Text</option>
+                            }
+                            else
+                            {
+                                <option value="@countries.Value">@countries.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-8">
+                    <div class="input-group input-group-sm">
+                        <input name="searchValue" type="text" class="form-control" placeholder="Input search value..." value="@Model.SearchValue">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

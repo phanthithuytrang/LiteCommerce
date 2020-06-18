@@ -20,5 +20,6 @@ namespace LiteCommerce.DomainModels
         public string Country { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
+        public virtual Country Countries { get; set; }
     }
 }

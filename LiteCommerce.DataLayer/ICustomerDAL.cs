@@ -16,14 +16,14 @@ namespace LiteCommerce.DataLayer
         /// <param name="pageSize"></param>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        List<Customer> List(int page, int pageSize, string searchValue);
+        List<Customer> List(int page, int pageSize, string searchValue, string country);
 
         /// <summary>
         /// Đếm số lượng đã tìm kiếm được
         /// </summary>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        int Count(string searchValue);
+        int Count(string searchValue, string country);
 
         /// <summary>
         /// 
@@ -54,6 +54,7 @@ namespace LiteCommerce.DataLayer
         /// <param name="CustomerIDs"></param>
         /// <returns></returns>
         int Delete(string[] CustomerIDs);
+        
     }
 }
 

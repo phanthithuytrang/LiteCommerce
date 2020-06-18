@@ -42,5 +42,9 @@ namespace LiteCommerce.BusinessLayers
         {
             return EmployeeDB.Delete(EmployeeIDs);
         }
+        public static bool ChangePassword(int userID, string password)
+        {
+            return EmployeeDB.ChangePassword(userID, password);
+        }
     }
 }

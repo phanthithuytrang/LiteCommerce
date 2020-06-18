@@ -1,5 +1,133 @@
-﻿
+﻿@model LiteCommerce.Admin.Models.OrderPaginationResult
 @{
     ViewBag.Title = "Order";
+    int i = 0;
 }
+<div class="box box-primary">
+    <div class="box-body">
+        <form action="~/Order" method="get">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Input search value..." name="searchValue" value="@Model.SearchValue">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container-fluid row" style="margin-bottom:10px;">
+    <div class="col-sm-8">
+        There are <b>@Model.RowCount</b> Orders. Page @string.Format("{0}/{1}", Model.Page, Model.PageCount)
+    </div>
+    <div class="col-md-4 text-right">
+        <div class="btn-group">
+            <a href="~/Order/Create" class="btn btn-sm btn-primary">Add Order</a>
+            <button type="button" class="btn btn-sm btn-danger">Delete Orders</button>
+        </div>
+    </div>
+</div>
+<div class="box box-success">
+    <div class="box-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width:30px">
+                        <input type="checkbox" onchange="selectAll(event)" />
+                    </th>
+                    <th style="width:50px">#</th>
+                    <th style="width:200px">Customer</th>
+                    <th style="width:200px">Employee</th>
+                    <th style="width:200px">Date</th>
+                    <th style="width:200px">Shipper</th>
+                    <th style="width:200px">Ship To</th>
+                    <th style="width:50px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach (var order in Model.Data)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" />
+                            </td>
+                            <td>@(++i + (Model.Page - 1) * Model.PageSize)</td>
+                            <td>
+                                <span>
+                                    @order.CustomerCompanyName
+                                </span>
+                            </td>
+                            <td>
+                                <span>@order.EmployeeName</span>
+                            </td>
+                            <td>
+                                <span style="display: block"> Order date: @order.OrderDate.ToShortDateString()</span>
+                                <span style="display: block">Required date: @order.RequiredDate.ToShortDateString()</span>
+                                <span style="display: block">Shipped date: @order.ShippedDate.ToShortDateString()</span>
+                            </td>
+                            <td>
+                                <span>@order.ShipperCompanyName</span>
+                            </td>
+                            <td>
+                                <span>@string.Format("{0}, {1}, {2}", order.ShipAddress, order.ShipCity, order.ShipCountry)</span>
+                            </td>
+                            <td class="text-right">
+                                    <a class="btn btn-sm btn-default" href="~/Order/Input/@i/">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                            </td>
+                        </tr>
+                    }
+            </tbody>
+        </table>
+    </div>
+    <div class="box-footer clearfix text-center">
+        <ul class="pagination pagination-sm no-margin pull-right">
+            @{
+                int currentPage = Model.Page;
+                // Pagination head
+                if (currentPage - 5 > 0)
+                {
+                    int prePage = currentPage - 1;
+                    <li><a href="~/Order?searchValue=@Model.SearchValue&page=1">‹‹</a></li>
+                    <li><a href="~/Order?searchValue=@Model.SearchValue&page=@prePage">‹</a></li>
+                    <li><a href="#">...</a></li>
+                }
+                int startPage = currentPage - 4 > 0 ? currentPage - 4 : 1;
+                for (int page = startPage; page <= currentPage; page++)
+                {
+                    if (page == currentPage)
+                    {
+                        <li class="active"><a href="~/Order?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="~/Order?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                    }
+                }
 
+                // Pagination tail
+                int endPage = currentPage + 4 < Model.PageCount ? currentPage + 4 : Model.PageCount;
+                for (int page = currentPage + 1; page <= endPage; page++)
+                {
+                    if (page == currentPage)
+                    {
+                        <li class="active"><a href="~/Order?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="~/Order?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                    }
+                }
+                if (currentPage + 4 < Model.PageCount)
+                {
+                    int nextPage = currentPage + 1;
+                    <li><a href="#">...</a></li>
+                    <li><a href="~/Order?searchValue=@Model.SearchValue&page=@nextPage">›</a></li>
+                    <li><a href="~/Order?searchValue=@Model.SearchValue&page=@Model.PageCount">››</a></li>
+                }
+            }
+        </ul>
+    </div>
+</div>

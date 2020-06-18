@@ -71,6 +71,22 @@ namespace LiteCommerce.Admin
             return list;
         }
 
+        //public static List<SelectListItem> Countries()
+        //{
+        //    List<SelectListItem> list = new List<SelectListItem>();
+        //    int count;
+        //    CatalogBLL.ListOfCountries(1, -1, "", out count).ForEach(country =>
+        //    {
+        //        list.Add(new SelectListItem()
+        //        {
+        //            Value = country.CountryName.ToString(),
+        //            Text = country.CountryName
+        //        });
+        //    });
+
+        //    return list;
+        //}
+
         public static List<SelectListItem> Attributes(bool allowSelectAll = true)
         {
             List<SelectListItem> list = new List<SelectListItem>();

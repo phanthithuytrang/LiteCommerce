@@ -78,7 +78,7 @@ namespace LiteCommerce.DataLayer.SqlServer
             return CustomerInsert;
         }
 
-        public int Count(string searchValue)
+        public int Count(string searchValue, string country)
         {
             int count = 0;
             if (!string.IsNullOrEmpty(searchValue))
@@ -89,10 +89,13 @@ namespace LiteCommerce.DataLayer.SqlServer
                 connection.Open();
 
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "select count(*) from Customers where @searchValue = N'' or CompanyName like @searchValue";
+                cmd.CommandText = @"select count(*) from Customers 
+                                   where ((@searchValue = N'') or (CompanyName like @searchValue))
+                                            and((@country = N'') or (Country like @country))";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = connection;
                 cmd.Parameters.AddWithValue("@searchValue", searchValue);
+                cmd.Parameters.AddWithValue("@country", country);
 
                 count = Convert.ToInt32(cmd.ExecuteScalar());
 
@@ -154,7 +157,8 @@ namespace LiteCommerce.DataLayer.SqlServer
                             City = Convert.ToString(dbReader["City"]),
                             Country = Convert.ToString(dbReader["Country"]),
                             Phone = Convert.ToString(dbReader["Phone"]),
-                            Fax = Convert.ToString(dbReader["Fax"])
+                            Fax = Convert.ToString(dbReader["Fax"]),
+                           
                         };
                     }
                 }
@@ -170,7 +174,7 @@ namespace LiteCommerce.DataLayer.SqlServer
         /// <param name="pageSize"></param>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        public List<Customer> List(int page, int pageSize, string searchValue)
+        public List<Customer> List(int page, int pageSize, string searchValue, string country)
         {
             List<Customer> data = new List<Customer>();
             if (!string.IsNullOrEmpty(searchValue))
@@ -186,7 +190,8 @@ namespace LiteCommerce.DataLayer.SqlServer
 	                                    select ROW_NUMBER() over(Order by CompanyName) as RowNumber,
 	                                    Customers.*
 	                                    from Customers
-	                                    where (@searchValue = N'') or (CompanyName like @searchValue)
+	                                    where ((@searchValue = N'') or (CompanyName like @searchValue))
+                                                and ((@country = N'') or (Country like @country))
                                     ) as t
                                     where t.RowNumber between (@page - 1) * @pageSize + 1 and @page * @pageSize
                                     order by t.RowNumber";
@@ -195,6 +200,7 @@ namespace LiteCommerce.DataLayer.SqlServer
                 cmd.Parameters.AddWithValue("@page", page);
                 cmd.Parameters.AddWithValue("@pageSize", pageSize);
                 cmd.Parameters.AddWithValue("@searchValue", searchValue);
+                cmd.Parameters.AddWithValue("@country", country);
 
                 using (SqlDataReader dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection))
                 {
@@ -211,6 +217,7 @@ namespace LiteCommerce.DataLayer.SqlServer
                             Country = Convert.ToString(dbReader["Country"]),
                             Phone = Convert.ToString(dbReader["Phone"]),
                             Fax = Convert.ToString(dbReader["Fax"]),
+                           
 
                         });
                     }

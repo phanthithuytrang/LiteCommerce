@@ -17,9 +17,50 @@ namespace LiteCommerce.Admin.Controllers
         {
             return View();
         }
-
         public ActionResult ChangePassword()
         {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(string userID, string oldPassword, string newPassword, string confirmPassword)
+        {
+            //kiểm tra hợp lệ dữ liệu
+            if (string.IsNullOrEmpty(userID))
+            {
+                ModelState.AddModelError("userID", "UserID is invalid");
+            }
+            if (string.IsNullOrEmpty(oldPassword))
+            {
+                ModelState.AddModelError("oldPassword", "Old Password is invalid");
+            }
+            if (string.IsNullOrEmpty(newPassword))
+            {
+                ModelState.AddModelError("newPassword", "New Password is invalid");
+            }
+            if (string.IsNullOrEmpty(confirmPassword))
+            {
+                ModelState.AddModelError("confirmPassword", "Confirm Password is invalid");
+            }
+            if (!newPassword.Equals(confirmPassword))
+            {
+                ModelState.AddModelError("notMatch", "New Password and Confirm Password must match");
+            }
+            Employee existEmployee = EmployeeBLL.GetEmployee(Convert.ToInt32(userID));
+            oldPassword = Encode.EncodeMD5(oldPassword);
+            newPassword = Encode.EncodeMD5(newPassword);
+            if (!existEmployee.Password.Equals(oldPassword))
+            {
+                ModelState.AddModelError("wrongPassword", "Password is wrong");
+            }
+
+            if (ModelState.IsValid)
+            {
+                //Lưu thay đổi
+                if (EmployeeBLL.ChangePassword(Convert.ToInt32(userID), newPassword))
+                {
+                    return RedirectToAction("Index", "Dashboard");
+                }
+            }
             return View();
         }
 
@@ -59,7 +100,7 @@ namespace LiteCommerce.Admin.Controllers
                 {
                     UserID = user.UserID,
                     FullName = user.FullName,
-                    GroupName = "Employee",//TODO: cần thay đổi cho đúng
+                    GroupName = user.Roles,//TODO: cần thay đổi cho đúng
                     LoginTime = DateTime.Now,
                     SessionID = Session.SessionID,
                     ClientIP = Request.UserHostAddress,
