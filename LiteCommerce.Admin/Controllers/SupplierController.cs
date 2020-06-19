@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace LiteCommerce.Admin.Controllers
 {
+    [Authorize(Roles = WebUserRoles.STAFF_DATA)]
     public class SupplierController : Controller
     {
         [Authorize]

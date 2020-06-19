@@ -1,0 +1,129 @@
+﻿@model LiteCommerce.Admin.Models.CountryPaginationResult
+@{
+    ViewBag.Title = "Country";
+    int i = 0;
+}
+
+<div class="box box-primary">
+    <div class="box-body">
+        <form action="~/Country" method="get">
+            <div class="input-group input-group-sm">
+                <input name="searchValue" type="text" class="form-control" placeholder="Input search value..." value="@Model.SearchValue">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<form action="~/Country/Delete" method="post">
+    <div class="container-fluid row" style="margin-bottom:10px;">
+        <div class="col-sm-8">
+            There are <b>@Model.RowCount</b> Countries. Page <b>
+                @string.Format("{0}/{1}", Model.Page, Model.PageCount)
+            </b>
+        </div>
+    <div class="col-md-4 text-right">
+        <div class="btn-group">
+            <a href="~/Country/Input" class="btn btn-sm btn-primary">Add Country</a>
+            <button type="submit" class="btn btn-sm btn-danger">Delete Countries</button>
+        </div>
+    </div>
+</div>
+<div class="box box-success">
+    <div class="box-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width:30px">
+                        <input type="checkbox" />
+                    </th>
+                    <th style="width:50px">#</th>
+                    <th style="width:auto">CountryName</th>
+                    <th style="width:50px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var country in Model.Data)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="countryIDs" value="@country.CountryID" />
+                        </td>
+                        <td>@(++i)</td>
+                        <td>
+                            <span style="color:#0094ff; font-weight:bold; display:block">
+                                @country.CountryName
+                            </span>
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-sm btn-default" href="~/Country/Input/@country.CountryID/">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="box-footer clearfix text-center">
+        <ul class="pagination pagination-sm no-margin pull-right">
+           
+            @{
+                int currentPage = Model.Page; // số của trang đang chọn
+                                              // Pagination head
+                if (currentPage - 5 > 0)
+                {
+                    int prePage = currentPage - 1;
+                    <li><a href="~/Country?searchValue=@Model.SearchValue&page=1">‹‹</a></li>
+                    <li><a href="~/Country?searchValue=@Model.SearchValue&page=@prePage">‹</a></li>
+                    <li><a href="#">...</a></li>
+                }
+                int startPage;
+                if (currentPage - 4 > 0)
+                {
+                    startPage = currentPage - 4;
+                }
+                else
+                {
+                    startPage = 1;
+                }
+                for (int page = startPage; page <= currentPage; page++)
+                {
+                    if (page == currentPage)
+                    {
+                        <li class="active"><a href="~/Country?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="~/Country?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                    }
+                }
+                // Pagination tail
+                int endPage = currentPage + 4 < Model.PageCount ? currentPage + 4 : Model.PageCount;
+                for (int page = currentPage + 1; page <= endPage; page++)
+                {
+                    if (page == currentPage)
+                    {
+                        <li class="active"><a href="~/Country?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="~/Country?searchValue=@Model.SearchValue&page=@page">@page</a></li>
+                    }
+                }
+                if (currentPage + 4 < Model.PageCount)
+                {
+                    int nextPage = currentPage + 1;
+                    <li><a href="#">...</a></li>
+                    <li><a href="~/Country?searchValue=@Model.SearchValue&page=@nextPage">›</a></li>
+                    <li><a href="~/Country?searchValue=@Model.SearchValue&page=@Model.PageCount">››</a></li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+</form>

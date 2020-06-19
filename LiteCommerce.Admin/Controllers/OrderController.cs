@@ -8,9 +8,9 @@ using System.Web.Mvc;
 
 namespace LiteCommerce.Admin.Controllers
 {
+    [Authorize(Roles = WebUserRoles.STAFF_SALE)]
     public class OrderController : Controller
     {
-        [Authorize]
         public ActionResult Index(int page = 1, string searchValue = "")
         {
             int pageSize = 3;

@@ -133,6 +133,20 @@ namespace LiteCommerce.BusinessLayers
             return ProductDB.List(1, -1, "", "", "");
         }
 
+        public static List<Country> ListOfCountries(int page, int pageSize, string searchValue, out int rowCount)
+        {
+            if (page < 1)
+                page = 1;
+            if (pageSize < 0)
+                pageSize = 20;
+            rowCount = CountryDB.Count(searchValue);
+            return CountryDB.List(page, pageSize, searchValue);
+        }
+
+        public static List<Country> ListOfCountries()
+        {
+            return CountryDB.List(1, -1, "");
+        }
 
         /// <summary>
         /// Lấy thông tin 1 supplier dựa vào DB
@@ -239,10 +253,7 @@ namespace LiteCommerce.BusinessLayers
             return ProductDB.Delete(productIDs);
         }
 
-        public static List<Country> ListOfCountries()
-        {
-            return CountryDB.List();
-        }
+        
 
         public static List<Attributes> ListOfAttributes()
         {
@@ -268,6 +279,24 @@ namespace LiteCommerce.BusinessLayers
         {
             return ProductAttributeDB.Get(attributeID);
         }
+
+        public static Country GetCountry(int CountryID)
+        {
+            return CountryDB.Get(CountryID);
+        }
+        public static int AddCountry(Country data)
+        {
+            return CountryDB.Add(data);
+        }
+        public static bool UpdateCountry(Country data)
+        {
+            return CountryDB.Update(data);
+        }
+        public static int DeleteCountries(int[] CountryIDs)
+        {
+            return CountryDB.Delete(CountryIDs);
+        }
+
         #endregion
     }
 }

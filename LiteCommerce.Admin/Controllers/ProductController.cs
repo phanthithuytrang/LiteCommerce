@@ -10,6 +10,7 @@ using System.Web.UI;
 
 namespace LiteCommerce.Admin.Controllers
 {
+    [Authorize(Roles = WebUserRoles.STAFF_DATA)]
     public class ProductController : Controller
     {
         [Authorize]

@@ -9,27 +9,25 @@ using System.Web.Mvc;
 namespace LiteCommerce.Admin.Controllers
 {
     [Authorize(Roles = WebUserRoles.STAFF_DATA)]
-    public class ShipperController : Controller
+    public class CountryController : Controller
     {
-        [Authorize]
         public ActionResult Index(int page = 1, string searchValue = "")
         {
             int pageSize = 3;
             int rowCount = 0;
-            List<Shipper> listOfShipper = CatalogBLL.ListOfShippers(page, pageSize, searchValue, out rowCount);
+            List<Country> listOfCountry = CatalogBLL.ListOfCountries(page, pageSize, searchValue, out rowCount);
 
-            var model = new Models.ShipperPaginationResult()
+            var model = new Models.CountryPaginationResult()
             {
                 Page = page,
                 PageSize = pageSize,
                 RowCount = rowCount,
                 SearchValue = searchValue,
-                Data = listOfShipper
+                Data = listOfCountry
 
             };
             return View(model);
         }
-
         [HttpGet]
         public ActionResult Input(string id = "")
         {
@@ -37,20 +35,20 @@ namespace LiteCommerce.Admin.Controllers
             {
                 if (string.IsNullOrEmpty(id))
                 {
-                    ViewBag.Title = "Create new Shipper";
-                    Shipper newShipper = new Shipper()
+                    ViewBag.Title = "Create new Country";
+                    Country newCountry = new Country()
                     {
-                        ShipperID = 0
+                        CountryID = 0
                     };
-                    return View(newShipper);
+                    return View(newCountry);
                 }
                 else
                 {
-                    ViewBag.Title = "Edit a Shipper";
-                    Shipper editShipper = CatalogBLL.GetShipper(Convert.ToInt32(id));
-                    if (editShipper == null)
+                    ViewBag.Title = "Edit a Country";
+                    Country editCountry = CatalogBLL.GetCountry(Convert.ToInt32(id));
+                    if (editCountry == null)
                         return RedirectToAction("Index");
-                    return View(editShipper);
+                    return View(editCountry);
                 }
             }
             catch (Exception ex)
@@ -58,31 +56,28 @@ namespace LiteCommerce.Admin.Controllers
                 return Content(ex.Message + ":" + ex.StackTrace);
             }
         }
-
         [HttpPost]
-        public ActionResult Input(Shipper model)
+        public ActionResult Input(Country model)
         {
             try
             {
-                //TODO: Kiểm tra tính hợp lệ của dự liệu được nhập
-                if (string.IsNullOrEmpty(model.CompanyName))
-                    ModelState.AddModelError("CompanyName", "CompanyName expected");
-                if (string.IsNullOrEmpty(model.Phone))
-                    model.Phone = "";
-
+                //TODO: Kiểm tra tính hợp lleej của dự liệu được nhập
+                if (string.IsNullOrEmpty(model.CountryName))
+                    ModelState.AddModelError("CountryName", "CountryName expected");
+               
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.Title = model.ShipperID == 0 ? "Add new Shipper" : "Edit a Shipper";
+                    ViewBag.Title = model.CountryID == 0 ? "Add new Country" : "Edit a Country";
                     return View(model);
                 }
                 //TODO: Lưu dữ liệu vào DB
-                if (model.ShipperID == 0)
+                if (model.CountryID == 0)
                 {
-                    CatalogBLL.AddShipper(model);
+                    CatalogBLL.AddCountry(model);
                 }
                 else
                 {
-                    CatalogBLL.UpdateShipper(model);
+                    CatalogBLL.UpdateCountry(model);
                 }
                 return RedirectToAction("Index");
             }
@@ -95,13 +90,13 @@ namespace LiteCommerce.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="ShipperIDs"></param>
+        /// <param name="CategoryIDs"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Delete(int[] ShipperIDs = null)
+        public ActionResult Delete(int[] CountryIDs = null)
         {
-            if (ShipperIDs != null)
-                CatalogBLL.DeleteShippers(ShipperIDs);
+            if (CountryIDs != null)
+                CatalogBLL.DeleteCountries(CountryIDs);
             return RedirectToAction("Index");
         }
     }

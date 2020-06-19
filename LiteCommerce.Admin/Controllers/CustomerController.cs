@@ -8,9 +8,9 @@ using System.Web.Mvc;
 
 namespace LiteCommerce.Admin.Controllers
 {
+    [Authorize(Roles = WebUserRoles.STAFF_DATA)]
     public class CustomerController : Controller
     {
-        [Authorize(Roles = WebUserRoles.ADMINISTRATOR)]
         public ActionResult Index(string country = "", int page = 1, string searchValue = "")
         {
 

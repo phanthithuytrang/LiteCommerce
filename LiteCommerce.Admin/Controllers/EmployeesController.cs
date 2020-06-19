@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace LiteCommerce.Admin.Controllers
 {
-    [Authorize(Roles = WebUserRoles.ADMINISTRATOR)]
+    [Authorize(Roles = WebUserRoles.STAFF_ACCOUNT)]
     public class EmployeesController : Controller
     {
         // GET: Employees
