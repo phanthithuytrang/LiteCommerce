@@ -62,5 +62,7 @@ namespace LiteCommerce.DataLayer
         /// <param name="password"></param>
         /// <returns></returns>
         bool ChangePassword(int userID, string password);
+
+        int CheckEmail(string email);
     }
 }

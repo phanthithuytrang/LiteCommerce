@@ -1,6 +1,191 @@
-﻿
+﻿@model LiteCommerce.DomainModels.Employee
 @{
-    ViewBag.Title = "Profile";
+    ViewBag.Title = "User Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userData = User.GetUserData();
 }
 
+<div class="box box-primary" style="">
+    <div class="box-body box-profile">
+        <img class="profile-user-img img-responsive img-circle" src="~/Images/Uploads/@userData.Photo" alt="User profile picture">
 
+        <h3 class="profile-username text-center">@Model.FirstName  @Model.LastName</h3>
+
+        <p class="text-muted text-center">@Model.Title</p>
+        <div class="box-body">
+            <div class="col-sm-5" style="margin-left:50px;">
+                <strong><i class="fa fa-user margin-r-5"></i> Name</strong>
+
+                <p class="text-muted">
+                    @Model.FirstName @Model.LastName
+                </p>
+            </div>
+            <div class="col-sm-4">
+                <strong><i class="fa fa-book margin-r-5"></i> Name Title</strong>
+
+                <p class="text-muted">
+                    @Model.Title
+                </p>
+            </div>
+            <div class="col-sm-2">
+                <strong><i class="fa fa-birthday-cake margin-r-5"></i> Birth Date</strong>
+
+                <p class="text-muted">
+                    @string.Format("{0:yyyy-MM-dd}", Model.BirthDate)
+                </p>
+            </div>
+
+            <div class="col-sm-5" style="margin-left:50px;">
+                <strong><i class="fa fa-book margin-r-5"></i> E-mail</strong>
+
+                <p class="text-muted">
+                    @Model.Email
+                </p>
+            </div>
+            <div class="col-sm-4">
+                <strong><i class="fa fa-book margin-r-5"></i> Hire Date</strong>
+
+                <p class="text-muted">
+                    @string.Format("{0:yyyy-MM-dd}", Model.HireDate)
+                </p>
+            </div>
+            <div class="col-sm-2">
+                <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+
+                <p class="text-muted">@Model.City</p>
+            </div>
+
+            <div class="col-sm-5" style="margin-left:50px;">
+                <strong><i class="fa fa-book margin-r-5"></i> Address</strong>
+
+                <p class="text-muted">
+                    @Model.Address
+                    @Model.Country
+                </p>
+            </div>
+            <div class="col-sm-4">
+                <strong><i class="fa fa-pencil margin-r-5"></i> Notes</strong>
+                <p>@Model.Notes</p>
+            </div>
+            <div class="col-sm-2">
+                <strong><i class="fa fa-phone margin-r-5"></i> Home Phone</strong>
+
+                <p class="text-muted">@Model.HomePhone</p>
+            </div>
+            <div class="form-group " style="float:right;padding-top:10px;padding-right:0px;">
+                <a class="btn btn-primary" data-toggle="modal" data-target="#editInfo"><div class="fa fa-edit"></div> Change profile</a>
+                <a class="btn btn-primary" href="~/Account/Changepassword"><div class="fa fa-edit"></div> Change password</a>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.box-body -->
+</div>
+
+<div class="modal fade" id="editInfo">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 700px">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Update profile</h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="~/Employees/Input" enctype="multipart/form-data">
+                    <input type="hidden" name="employeeID" value="@Model.EmployeeID" />
+                    <input type="hidden" name="Password" value="@Model.Password" />
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>First Name</label> <input type="text"
+                                                             class="text form-control" placeholder="Firstname" required
+                                                             name="firstName" value="@Model.FirstName">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Last Name</label> <input type="text"
+                                                            class="text form-control" placeholder="Last name" required
+                                                            name="lastName" value="@Model.LastName">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Name title </label> <input type="text"
+                                                              class="text form-control" placeholder="Ex: Manage person" required
+                                                              name="title" value="@Model.Title">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="hidden"
+                               class="text form-control" name="photoPath" value="@Model.PhotoPath">
+                        <div class="form-group">
+                            <label>Photo Path</label> <input type="file"
+                                                             class="text form-control" placeholder="Photo path"
+                                                             name="uploadFile">
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>E-mail @Html.ValidationMessage("Email", new { @style = "color: red" })</label><i class="text-danger"> </i>
+                            <input type="email"
+                                   class="text form-control" placeholder="Ex: abc@gmail.com" required
+                                   name="EmailNew" value="@Model.Email">
+                            <input type="hidden" class="form-control" name="Email" value="@Model.Email">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Birth Date</label> <input type="date"
+                                                             class="text form-control"
+                                                             name="birthDate" value="@string.Format("{0:yyyy-MM-dd}", Model.BirthDate)">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Hire Date</label> <input type="date"
+                                                            class="text form-control"
+                                                            name="hireDate" value="@string.Format("{0:yyyy-MM-dd}", Model.HireDate)">
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>Address</label> <input type="text"
+                                                      class="form-control" name="address"
+                                                      placeholder="Address" value="@Model.Address">
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Country</label>
+                            @Html.DropDownListFor(m => m.Country, SelectListHelper.Countries(), "-- Choice your country -- ", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label>City</label>
+                        <input type="text" class="form-control" name="City" placeholder="8712367126" value="@Model.City" required>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <label>Home Phone</label> <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-phone"></i></div>
+                            <input type="text" class="form-control" name="homePhone" placeholder="8712367126" value="@Model.HomePhone" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Notes</label>
+                            <textarea class="form-control" rows="4" name="Notes">@Model.Notes</textarea>
+                        </div>
+                    </div>
+
+                    <div style="padding-left:525px;">
+                        <button type="submit" class="btn btn-success mb-3" name="subUpdate">Update</button>
+                        <a class="btn btn-danger ml-3 mb-3" style="color: #fff;" data-dismiss="modal">Hủy</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

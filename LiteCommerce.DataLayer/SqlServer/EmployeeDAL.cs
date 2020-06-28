@@ -80,6 +80,25 @@ namespace LiteCommerce.DataLayer.SqlServer
 
             return EmployeeId;
         }
+
+        public int CheckEmail(string email)
+        {
+            int count = 0;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"select COUNT(*) from Employees
+                                    where Email = @email";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = connection;
+                cmd.Parameters.AddWithValue("@email", email);
+                count = Convert.ToInt32(cmd.ExecuteScalar());
+                connection.Close();
+            }
+            return count;
+        }
+
         public int Count(string searchValue)
         {
             int count = 0;
@@ -113,7 +132,7 @@ namespace LiteCommerce.DataLayer.SqlServer
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"DELETE FROM Employees
                                             WHERE(EmployeeID = @EmployeeId)
-                                            ";
+                                            AND(EmployeeID NOT IN(SELECT EmployeeID FROM Orders))";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = connection;
                 cmd.Parameters.Add("@EmployeeId", SqlDbType.Int);

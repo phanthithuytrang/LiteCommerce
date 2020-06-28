@@ -121,6 +121,7 @@
     <Compile Include="App_Start\BusinessLayerConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Codes\CheckAuthorization.cs" />
     <Compile Include="Codes\Encode.cs" />
     <Compile Include="Codes\SelectListHelper.cs" />
     <Compile Include="Codes\WebUserData.cs" />
@@ -7335,7 +7336,7 @@
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
-    <Content Include="Views\Account\FogotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Order\Create.cshtml" />
     <Content Include="Views\Order\List.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />

@@ -15,7 +15,9 @@ namespace LiteCommerce.Admin.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            return View();
+            WebUserData userData = User.GetUserData();
+            Employee employee = EmployeeBLL.GetEmployee(Convert.ToInt32(userData.UserID));
+            return View(employee);
         }
         public ActionResult ChangePassword()
         {
@@ -132,9 +134,35 @@ namespace LiteCommerce.Admin.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult FogotPassword()
+        public ActionResult ForgotPassword()
         {
             return View();
         }
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ForgotPassword(string email = "", string pwn = "", string confirmpw = "")
+        {
+            ViewBag.Email = email;
+            if (pwn.Equals(confirmpw))
+            {
+                if (EmployeeBLL.CheckEmail(email) != 0)
+                {
+                    UserAccountBLL.ChangePassword(Encode.EncodeMD5(pwn), email);
+                    return RedirectToAction("SignIn", "Account");
+                }
+                else
+                {
+                    ModelState.AddModelError("Messege", "Email không tồn tại!");
+                    return View();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("Messege", "Mật Khẩu không khớp!");
+                return View();
+            }
+
+        }
+
     }
-}
+} 

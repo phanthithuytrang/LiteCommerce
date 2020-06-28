@@ -1,5 +1,135 @@
-﻿
+﻿@model LiteCommerce.DomainModels.Order
 @{
     ViewBag.Title = "Create";
 }
+    <div class="box box-primary">
+            <form role="form" action="~/Order/Create" method="post">
+                <div class="box-header text-right">
+                    <a href="~/Order">Back to List</a>
+                </div>
+                <div class="box-body">
+                    <div class="form-group row">
+                        <input name="OrderID" value="@Model.OrderID" type="hidden" />
+                        <div class="col-sm-4">
+                                <label>Customer: @Html.ValidationMessage("CustomerID")</label>
+                                <select class="form-control" name="CustomerID">
+                                    <option value="">-- Choose Customer --</option>
+                                    @{
+                                        foreach (var customer in SelectListHelper.Customers())
+                                        {
+                                            if (Model.CustomerID == customer.Value)
+                                            {
+                                                <option selected value="@customer.Value">@customer.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@customer.Value">@customer.Text</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                        </div>
+                        <div class="col-sm-4">
+                                <label>Employee: @Html.ValidationMessage("EmployeeID")</label>
+                                <select class="form-control" name="EmployeeID">
+                                    <option value="0">-- Choose Employee --</option>
+                                    @{
+                                        foreach (var employee in SelectListHelper.Employees())
+                                        {
+                                            if (Model.EmployeeID == Convert.ToInt32(employee.Value))
+                                            {
+                                                <option selected value="@employee.Value">@employee.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@employee.Value">@employee.Text</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                        </div>
+                        <div class="col-sm-4">
+                                <label>Shipper: @Html.ValidationMessage("ShipperID")</label>
+                                <select class="form-control" name="ShipperID">
+                                    <option value="0">-- Choose Shipper --</option>
+                                    @{
+                                        foreach (var shipper in SelectListHelper.Shippers())
+                                        {
+                                            if (Model.ShipperID == Convert.ToInt32(shipper.Value))
+                                            {
+                                                <option selected value="@shipper.Value">@shipper.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@shipper.Value">@shipper.Text</option>
 
+                                            }
+                                        }
+                                    }
+                                </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <label>Order Date:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="datetime" class="form-control" placeholder="OrderDate" value="@Model.OrderDate" name="OrderDate">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Required Date:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="datetime" class="form-control" placeholder="RequiredDate" value="@Model.RequiredDate" name="RequiredDate">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Shipped Date:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="datetime" class="form-control" placeholder="ShippedDate" value="@Model.ShippedDate" name="ShippedDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <label>Ship Address: @Html.ValidationMessage("ShipAddress")</label>
+                            <input name="ShipAddress" type="text" class="form-control" placeholder="Ex: New Orleans" value="@Model.ShipAddress">
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Ship City: @Html.ValidationMessage("ShipCity")</label>
+                            <input name="ShipCity" type="text" class="form-control" placeholder="Ex: New Orleans" value="@Model.ShipCity">
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Ship Country: @Html.ValidationMessage("ShipCountry")</label>
+                            <select name="ShipCountry" class="form-control">
+                                <option value="">-- Choose Country --</option>
+                                @{
+                                    foreach (var country in SelectListHelper.Countries())
+                                    {
+                                        if (Model.ShipCountry == country.Value)
+                                        {
+                                            <option selected value="@country.Value">@country.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@country.Value">@country.Text</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+                    <a class="btn btn-sm btn-default" href="~/Order">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+    </div>

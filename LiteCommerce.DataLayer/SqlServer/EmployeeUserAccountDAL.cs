@@ -50,6 +50,29 @@ namespace LiteCommerce.DataLayer.SqlServer
                 connection.Close();
             }
             return data;
-        }    
+        }
+
+        public bool ChangePassword(string Password, string email)
+        {
+            int rowsAffected = 0;
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"UPDATE Employees
+                                           SET Password = @Password
+                                          WHERE Email = @email";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = connection;
+                cmd.Parameters.AddWithValue("@Password", Password);
+                cmd.Parameters.AddWithValue("@email", email);
+                rowsAffected = Convert.ToInt32(cmd.ExecuteNonQuery());
+
+                connection.Close();
+            }
+
+            return rowsAffected > 0;
+        }   
     }
 }

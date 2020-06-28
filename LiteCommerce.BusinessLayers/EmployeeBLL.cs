@@ -46,5 +46,9 @@ namespace LiteCommerce.BusinessLayers
         {
             return EmployeeDB.ChangePassword(userID, password);
         }
+        public static int CheckEmail(string email)
+        {
+            return EmployeeDB.CheckEmail(email);
+        }
     }
 }

@@ -21,5 +21,7 @@ namespace LiteCommerce.DataLayer
         /// <param name="Password"></param>
         /// <returns></returns>
         UserAccount Authorize(string userName, string password);
+
+        bool ChangePassword(string Password, string email);
     }
 }

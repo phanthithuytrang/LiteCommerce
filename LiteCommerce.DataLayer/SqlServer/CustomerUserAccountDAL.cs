@@ -24,5 +24,9 @@ namespace LiteCommerce.DataLayer.SqlServer
                 Title = "Vice President, Sales"
             };
         }
+        public bool ChangePassword(string Password, string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

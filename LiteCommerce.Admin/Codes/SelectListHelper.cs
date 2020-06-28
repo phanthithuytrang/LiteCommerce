@@ -101,5 +101,40 @@ namespace LiteCommerce.Admin
             }
             return list;
         }
+        public static List<SelectListItem> Customers()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            int count;
+            List<Customer> customers = CatalogBLL.ListOfCustomer(1, -1, "", "", out count);
+            foreach (Customer customer in customers)
+            {
+                list.Add(new SelectListItem() { Value = customer.CustomerID, Text = customer.CompanyName });
+            }
+            return list;
+        }
+
+        public static List<SelectListItem> Employees()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            int count;
+            List<Employee> employees = EmployeeBLL.ListOfEmployees(1, -1, "", out count);
+            foreach (Employee employee in employees)
+            {
+                list.Add(new SelectListItem() { Value = Convert.ToString(employee.EmployeeID), Text = employee.FirstName + " " + employee.LastName });
+            }
+            return list;
+        }
+
+        public static List<SelectListItem> Shippers()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            int count;
+            List<Shipper> shippers = CatalogBLL.ListOfShippers(1, -1, "", out count);
+            foreach (Shipper shipper in shippers)
+            {
+                list.Add(new SelectListItem() { Value = Convert.ToString(shipper.ShipperID), Text = shipper.CompanyName });
+            }
+            return list;
+        }
     }
 }

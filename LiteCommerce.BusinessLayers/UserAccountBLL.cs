@@ -12,7 +12,7 @@ namespace LiteCommerce.BusinessLayers
     public static class UserAccountBLL
     {
         private static string _connectionString;
-
+        private static IUserAccountDAL userAccountDB { get; set; }
         public static void Initialize(string connectionString)
         {
             _connectionString = connectionString;
@@ -20,7 +20,6 @@ namespace LiteCommerce.BusinessLayers
 
         public static UserAccount Authorize(string userName, string password, UserAccountTypes userType)
         {
-            IUserAccountDAL userAccountDB;
             switch (userType)
             {
                 case UserAccountTypes.Employee:
@@ -33,6 +32,10 @@ namespace LiteCommerce.BusinessLayers
                     return null;
             }
             return userAccountDB.Authorize(userName, password);
+        }
+        public static bool ChangePassword(string password, string email)
+        {
+            return userAccountDB.ChangePassword(password, email);
         }
     }
 }
